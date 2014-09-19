@@ -55,4 +55,146 @@
 
 //Register Masks
 
-#define LIS2DH_ 0x
+//STATUS_AUX_REG masks
+#define LIS2DH_TOR_MASK 		0x40
+#define LIS2DH_TDA_MASK 		0x04
+
+//INT_COUNTER masks
+//what goes here?
+
+//WHO_AM_I masks
+#define LIS2DH_I_AM_MASK 		0x33
+
+// TEMP_CFG_REG masks
+#define LIS2DH_TEMP_EN1_MASK 	0x80
+#define LIS2DH_TEMP_EN2_MASK 	0x40
+
+// CTRL_REG1 masks
+#define LIS2DH_ODR_MASK 		0xF0
+#define LIS2DH_LPEN_MASK 		0x08
+#define LIS2DH_Z_EN_MASK 		0x04
+#define LIS2DH_Y_EN_MASK 		0x02
+#define LIS2DH_X_EN_MASK		0x01
+
+// CTRL_REG2 masks
+#define LIS2DH_HPM_MASK 		0xC0
+#define LIS2DH_HPCF_MASK 		0x30
+#define LIS2DH_FDS_MASK 		0x08
+#define LIS2DH_HPCLICK_MASK 	0x04
+#define LIS2DH_HPIS2_MASK 		0x02
+#define LIS2DH_HPIS1_MASK 		0x01
+
+// CTRL_REG3 masks
+#define LIS2DH_I1_CLICK 		0x80
+#define LIS2DH_I1_AOI 			0x60
+#define LIS2DH_I1_DRDY 			0x18
+#define LIS2DH_I1_WTM 			0x04
+#define LIS2DH_I1_OVERRUN 		0x02
+
+// CTRL_REG4 masks
+#define LIS2DH_BDU_MASK 		0x80
+#define LIS2DH_BLE_MASK 		0x40
+#define LIS2DH_FS_MASK 			0x30
+#define LIS2DH_HR_MASK 			0x08
+#define LIS2DH_ST_MASK 			0x06
+#define LIS2DH_SIM_MASK 		0x01
+
+// CTRL_REG5 masks
+#define LIS2DH_BOOT_MASK 		0x80
+#define LIS2DH_FIFO_EN_MASK 	0x40
+#define LIS2DH_LIR_INT1_MASK 	0x08
+#define LIS2DH_D4D_INT1_MASK 	0x04
+#define LIS2DH_LIR_INT2_MASK	0x02
+#define LIS2DH_D4D_INT2_MASK	0x01
+
+// CTRL_REG6 masks
+#define LIS2DH_I2C_CCK_EN_MASK	0x80
+#define LIS2DH_I2C_INT1_MASK 	0x40
+#define LIS2DH_I2C_INT2_MASK 	0x20
+#define LIS2DH_BOOT_I2_MASK 	0x10
+#define LIS2DH_P2_ACT_MASK 		0x08
+#define LIS2DH_H_LACTIVE_MASK 	0x02
+
+// REF masks
+// none
+
+// STATUS_REG masks
+#define LIS2DH_ZYXOR_MASK 		0x80
+#define LIS2DH_ZOR_MASK 		0x40
+#define LIS2DH_YOR_MASK 		0x20
+#define LIS2DH_XOR_MASK 		0x10
+#define LIS2DH_ZYXDA_MASK 		0x08
+#define LIS2DH_ZDA_MASK 		0x04
+#define LIS2DH_YDA_MASK 		0x02
+#define LIS2DH_XDA_MASK 		0x01
+
+// FIFO_CTRL_REG masks
+#define LIS2DH_FM_MASK 			0xC0
+#define LIS2DH_TR_MASK 			0x20
+#define LIS2DH_FTH_MASK 		0x1F
+
+// FIFO_SRC_REG masks
+#define LIS2DH_WTM_MASK 		0x80
+#define LIS2DH_OVRN_FIFO_MASK 	0x40
+#define LIS2DH_EMPTY_MASK 		0x20
+#define LIS2DH_FSS_MASK 		0x1F
+
+// INT1/2_CFG masks
+#define LIS2DH_AOI_MASK 		0x80
+#define LIS2DH_6D_MASK 			0x40
+#define LIS2DH_ZHIE_MASK 		0x20
+#define LIS2DH_ZLIE_MASK 		0x10
+#define LIS2DH_YHIE_MASK 		0x08
+#define LIS2DH_YLIE_MASK 		0x04
+#define LIS2DH_XHIE_MASK 		0x02
+#define LIS2DH_XLIE_MASK 		0x01
+
+// INT1/2_SRC masks
+#define LIS2DH_INT_IA_MASK 		0x40
+#define LIS2DH_ZH_MASK 			0x20
+#define LIS2DH_ZL_MASK 			0x10
+#define LIS2DH_YH_MASK 			0x08
+#define LIS2DH_YL_MASK 			0x04
+#define LIS2DH_XH_MASK 			0x02
+#define LIS2DH_XL_MASK 			0x01
+
+// INT1/2_THS masks
+#define LIS2DH_THS_MASK 		0x4F
+
+// INT1/2_DURATION masks
+#define LIS2DH_D_MASK 			0x4F
+
+// CLICK_CFG masks
+#define LIS2DH_ZD_MASK 			0x20
+#define LIS2DH_ZS_MASK 			0x10
+#define LIS2DH_YD_MASK 			0x08
+#define LIS2DH_YS_MASK 			0x04
+#define LIS2DH_XD_MASK 			0x02
+#define LIS2DH_XS_MASK 			0x01
+
+// CLICK_SRC masks
+#define LIS2DH_CLK_IA_MASK 		0x40
+#define LIS2DH_DCLICK_MASK 		0x20
+#define LIS2DH_SCLICK_MASK 		0x10
+#define LIS2DH_SIGN_MASK 		0x08
+#define LIS2DH_Z_CLICK_MASK 	0x04
+#define LIS2DH_Y_CLICK_MASK 	0x02
+#define LIS2DH_X_CLICK_MASK 	0x01
+
+// CLICK_THS masks
+#define LIS2DH_CLK_THS_MASK 	0x7F
+
+// TIME_LIMIT masks
+#define LIS2DH_TLI_MASK 		0x7F
+
+// TIME_LATENCY masks
+// none
+
+// TIME_WINDOW masks
+// none
+
+// ACT_THS masks
+#define LIS2DH_ACTH_MASK 		0x7F
+
+// ACT_DUR masks
+// None
