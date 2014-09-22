@@ -77,3 +77,102 @@ int16_t LIS2DH::getAxisY(void) {
 int16_t LIS2DH::getAxisZ(void) {
 	return readRegisters(LIS2DH_OUT_Z_H, LIS2DH_OUT_Z_L);
 }
+
+bool LIS2DH::tempHasOverrun(void) {
+    return (readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TOR_MASK) != 0);
+}
+
+bool LIS2DH::tempDataAvailable(void) {
+    return (readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TDA_MASK) != 0);
+}
+
+uint16_t LIS2DH::getTemperature(void) {
+    if(tempDataAvailable()){
+        return readRegisters(LIS2DH_OUT_TEMP_H, LIS2DH_OUT_TEMP_L);
+    } else {
+        //if new data isn't available
+        return 0;
+    }
+}
+
+bool LIS2DH::whoAmI() {
+    return (LIS2DH_I_AM_MASK == readRegister(LIS2DH_WHO_AM_I));
+}
+
+bool LIS2DH::getTempEnabled(void) {
+    return (readMaskedRegister(LIS2DH_TEMP_CFG_REG, LIS2DH_TEMP_EN_MASK) != 0);
+}
+
+bool LIS2DH::setTempEnabled(bool enable) {
+    return writeRegister(LIS2DH_TEMP_CFG_REG, enable ? LIS2DH_TEMP_EN_MASK : 0);
+}
+
+uint8_t LIS2DH::getDataRate(void) {
+    return readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_ODR_MASK);
+}
+
+bool LIS2DH::setDataRate(uint8_t rate) {
+    if(rate > 9) {
+        return 0;
+    }
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_ODR_MASK, rate << 4);
+}
+
+
+bool LIS2DH::enableLowPower(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_LPEN_MASK, true);
+}
+
+
+bool LIS2DH::disableLowPower(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_LPEN_MASK, false);
+}
+
+
+bool LIS2DH::isLowPowerEnabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_LPEN_MASK) != 0);
+}
+
+bool LIS2DH::enableAxisX(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_X_EN_MASK, true);
+}
+
+bool LIS2DH::disableAxisX(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_X_EN_MASK, false);
+}
+
+bool LIS2DH::isXAxisEnabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_X_EN_MASK) != 0);
+}
+
+bool LIS2DH::EnableAxisY(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Y_EN_MASK, true);
+}
+
+bool LIS2DH::disableAxisY(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Y_EN_MASK, false);
+}
+
+bool LIS2DH::isYAxisEnabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Y_EN_MASK) != 0);
+}
+
+bool LIS2DH::EnableAxisZ(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK, true);
+}
+
+bool LIS2DH::disableAxisZ(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK, false);
+}
+
+bool LIS2DH::isZAxisEnabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK) != 0);
+}
+
+bool LIS2DH::() {
+    return 0;
+}
+
+bool LIS2DH::() {
+    return 0;
+}

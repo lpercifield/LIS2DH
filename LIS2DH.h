@@ -66,8 +66,7 @@
 #define LIS2DH_I_AM_MASK 		0x33
 
 // TEMP_CFG_REG masks
-#define LIS2DH_TEMP_EN1_MASK 	0x80
-#define LIS2DH_TEMP_EN2_MASK 	0x40
+#define LIS2DH_TEMP_EN_MASK 	0xC0
 
 // CTRL_REG1 masks
 #define LIS2DH_ODR_MASK 		0xF0
