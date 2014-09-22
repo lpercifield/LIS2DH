@@ -11,14 +11,21 @@
 */
 
 #include "LIS2DH.h"
+#include "Wire.h"
 
 LIS2DH::LIS2DH() {
-    _address = MPU9250_DEFAULT_ADDRESS;
+    _address = LIS2DH_DEFAULT_ADDRESS;
 }
 
-
-LIS2DH::LIS2DH(uint8_t address) {
-    _address = address;
+bool LIS2DH::init(void) {
+    Wire.begin(); 
+    
+    //Put into the correct operating mode 
+    enableAxisX();
+    enableAxisY();
+    enableAxisZ();
+    disableLowPower();
+    setDataRate(2);
 }
 
 bool LIS2DH::writeRegister(const uint8_t register_addr, const uint8_t value) {
@@ -26,6 +33,11 @@ bool LIS2DH::writeRegister(const uint8_t register_addr, const uint8_t value) {
     //send register address to sensor
     //send value to register
     bool write status = 0;
+    Wire.beginTransmission(_address); //open communication with 
+    Wire.write(register_addr);  
+    Wire.write(value); 
+    Wire.endTransmission(); 
+
     return write_status; //returns whether the write succeeded or failed
 }
 
@@ -78,6 +90,12 @@ int16_t LIS2DH::getAxisZ(void) {
 	return readRegisters(LIS2DH_OUT_Z_H, LIS2DH_OUT_Z_L);
 }
 
+void LIS2DH::getMotion(int16_t* ax, int16_t* ay, int16_t* az) {
+    *ax = getAxisX();
+    *ay = getAxisY();
+    *az = getAxisZ();
+}
+
 bool LIS2DH::tempHasOverrun(void) {
     return (readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TOR_MASK) != 0);
 }
@@ -95,7 +113,7 @@ uint16_t LIS2DH::getTemperature(void) {
     }
 }
 
-bool LIS2DH::whoAmI() {
+bool LIS2DH::whoAmI(void) {
     return (LIS2DH_I_AM_MASK == readRegister(LIS2DH_WHO_AM_I));
 }
 
@@ -145,7 +163,7 @@ bool LIS2DH::isXAxisEnabled(void) {
     return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_X_EN_MASK) != 0);
 }
 
-bool LIS2DH::EnableAxisY(void) {
+bool LIS2DH::enableAxisY(void) {
     return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Y_EN_MASK, true);
 }
 
@@ -157,7 +175,7 @@ bool LIS2DH::isYAxisEnabled(void) {
     return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Y_EN_MASK) != 0);
 }
 
-bool LIS2DH::EnableAxisZ(void) {
+bool LIS2DH::enableAxisZ(void) {
     return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK, true);
 }
 
@@ -169,10 +187,55 @@ bool LIS2DH::isZAxisEnabled(void) {
     return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK) != 0);
 }
 
-bool LIS2DH::() {
-    return 0;
+bool LIS2DH::getHPFilterMode(uint8_t mode) {
+    return readMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPM_MASK);
 }
 
-bool LIS2DH::() {
-    return 0;
+bool LIS2DH::setHPFilterMode(uint8_t mode) {
+    if(mode > 3) {
+        return 0;
+    }
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPM_MASK, mode << 6);
 }
+
+//FDS functions
+
+bool LIS2DH::EnableHPClick(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPCLICK_MASK, true);
+}
+
+bool LIS2DH::disableHPClick(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPCLICK_MASK, false);
+}
+
+bool LIS2DH::isHPClickEnabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPCLICK_MASK) != 0);
+}
+
+bool LIS2DH::EnableHPIS1(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS1_MASK, true);
+}
+
+bool LIS2DH::disableHPIS1(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS1_MASK, false);
+}
+
+bool LIS2DH::isHPIS1Enabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS1_MASK) != 0);
+}
+
+bool LIS2DH::EnableHPIS2(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS2_MASK, true);
+}
+
+bool LIS2DH::disableHPIS2(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS2_MASK, false);
+}
+
+bool LIS2DH::isHPIS2Enabled(void) {
+    return (readMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPIS2_MASK) != 0);
+}
+
+//bool LIS2DH::(void) {
+//    return 0;
+//}

@@ -197,3 +197,60 @@
 
 // ACT_DUR masks
 // None
+
+#define LIS2DH_DEFAULT_ADDRESS 	0x18
+class LIS2DH {
+    public:
+        LIS2DH();
+       	bool init(void);
+
+		int16_t getAxisX(void);
+		int16_t getAxisY(void);
+		int16_t getAxisZ(void);
+		void getMotion(int16_t* ax, int16_t* ay, int16_t* az);
+
+		bool tempHasOverrun(void);
+		bool tempDataAvailable(void);
+		uint16_t LIS2DH::getTemperature(void);
+		bool whoAmI(void);
+		bool getTempEnabled(void);
+		bool setTempEnabled(bool enable);
+		uint8_t getDataRate(void);
+		bool setDataRate(uint8_t rate);
+		bool enableLowPower(void);
+		bool disableLowPower(void);
+		bool isLowPowerEnabled(void);
+		bool enableAxisX(void);
+		bool disableAxisX(void);
+		bool isXAxisEnabled(void);
+		bool enableAxisY(void);
+		bool disableAxisY(void);
+		bool isYAxisEnabled(void);
+		bool enableAxisZ(void);
+		bool disableAxisZ(void);
+		bool isZAxisEnabled(void);
+		bool getHPFilterMode(uint8_t mode);
+		bool setHPFilterMode(uint8_t mode);
+		bool EnableHPClick(void);
+		bool disableHPClick(void);
+		bool isHPClickEnabled(void);
+		bool EnableHPIS1(void);
+		bool disableHPIS1(void);
+		bool isHPIS1Enabled(void);
+		bool EnableHPIS2(void);
+		bool disableHPIS2(void);
+		bool isHPIS2Enabled(void);
+
+    private:
+        bool writeRegister(const uint8_t register_addr, const uint8_t value);
+        bool writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value);
+		bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value);
+		uint8_t readRegister(const uint8_t register_addr);
+		uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
+		uint8_t readMaskedRegister(const uint8_t register_addr, const uint8_t mask);
+
+        uint8_t _address;
+        uint8_t _whoami;
+};
+
+#endif /* _LIS2DH_H_ */
