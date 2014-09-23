@@ -70,6 +70,17 @@ uint8_t LIS2DH::readRegister(const uint8_t register_addr) {
     //call sensor by address
     //call registers
     uint8_t data = 0;
+
+    Wire.beginTransmission(_address); 
+    Wire.write(register_addr); 
+    Wire.endTransmission(); 
+
+    Wire.requestFrom((int)_address, 1);
+
+    while(Wire.available()) {
+        data = Wire.read();    // receive a byte as character
+    }
+
     return data; //return the data returned from the register
 }
 
