@@ -10,6 +10,7 @@
 * PLEASE KEEP THIS IN MIND IF YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
 */
 
+#include "stdint.h"
 #include "LIS2DH.h"
 #include "Wire.h"
 
@@ -32,7 +33,7 @@ bool LIS2DH::writeRegister(const uint8_t register_addr, const uint8_t value) {
     //send write call to sensor address
     //send register address to sensor
     //send value to register
-    bool write status = 0;
+    bool write_status = 0;
     Wire.beginTransmission(_address); //open communication with 
     Wire.write(register_addr);  
     Wire.write(value); 
@@ -41,7 +42,7 @@ bool LIS2DH::writeRegister(const uint8_t register_addr, const uint8_t value) {
     return write_status; //returns whether the write succeeded or failed
 }
 
-bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value) { 
+bool LIS2DH::writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value) { 
     //send write call to sensor address
     //send register address to sensor
     //send value to register
@@ -51,27 +52,35 @@ bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value
     return msb_bool | lsb_bool; //returns whether the write succeeded or failed
 }
 
-bool MPU9250::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
-    masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
+bool LIS2DH::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const bool value) {
+    if(value) {
+        return writeRegister(register_addr, mask);
+    } else {
+        return writeRegister(register_addr, 0);
+    }
+}
+
+bool LIS2DH::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
+    uint8_t masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
     return writeRegister(register_addr, masked_value);
     //every reference to this is wrong (also)!! fix them!
 }
 
-uint8_t MPU9250::readRegister(const uint8_t register_addr) {
+uint8_t LIS2DH::readRegister(const uint8_t register_addr) {
     //call sensor by address
     //call registers
-    uint8_t data =0;
+    uint8_t data = 0;
     return data; //return the data returned from the register
 }
 
-uint16_t MPU9250::readRegisters(const uint8_t msb_register, const uint8_t lsb_register) {
+uint16_t LIS2DH::readRegisters(const uint8_t msb_register, const uint8_t lsb_register) {
     uint8_t msb = readRegister(msb_register);
     uint8_t lsb = readRegister(lsb_register);
     return (((int16_t)msb) << 8) | lsb;
 
 }
 
-uint8_t MPU9250::readMaskedRegister(const uint8_t register_addr, const uint8_t mask) {
+uint8_t LIS2DH::readMaskedRegister(const uint8_t register_addr, const uint8_t mask) {
     uint8_t data = readRegister(register_addr);
     return (data & mask);
 
@@ -97,11 +106,13 @@ void LIS2DH::getMotion(int16_t* ax, int16_t* ay, int16_t* az) {
 }
 
 bool LIS2DH::tempHasOverrun(void) {
-    return (readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TOR_MASK) != 0);
+    uint8_t overrun = readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TOR_MASK);
+    return (overrun != 0);
 }
 
 bool LIS2DH::tempDataAvailable(void) {
-    return (readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TDA_MASK) != 0);
+    uint8_t data = readMaskedRegister(LIS2DH_STATUS_REG_AUX, LIS2DH_TDA_MASK);
+    return (data != 0);
 }
 
 uint16_t LIS2DH::getTemperature(void) {
@@ -133,7 +144,8 @@ bool LIS2DH::setDataRate(uint8_t rate) {
     if(rate > 9) {
         return 0;
     }
-    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_ODR_MASK, rate << 4);
+    uint8_t data_rate = rate << 4;
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_ODR_MASK, data_rate);
 }
 
 
@@ -195,7 +207,8 @@ bool LIS2DH::setHPFilterMode(uint8_t mode) {
     if(mode > 3) {
         return 0;
     }
-    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPM_MASK, mode << 6);
+    uint8_t filter_mode = mode << 6;
+    return writeMaskedRegister(LIS2DH_CTRL_REG2, LIS2DH_HPM_MASK, filter_mode);
 }
 
 //FDS functions

@@ -211,7 +211,7 @@ class LIS2DH {
 
 		bool tempHasOverrun(void);
 		bool tempDataAvailable(void);
-		uint16_t LIS2DH::getTemperature(void);
+		uint16_t getTemperature(void);
 		bool whoAmI(void);
 		bool getTempEnabled(void);
 		bool setTempEnabled(bool enable);
@@ -244,6 +244,7 @@ class LIS2DH {
     private:
         bool writeRegister(const uint8_t register_addr, const uint8_t value);
         bool writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value);
+        bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const bool value);
 		bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value);
 		uint8_t readRegister(const uint8_t register_addr);
 		uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
