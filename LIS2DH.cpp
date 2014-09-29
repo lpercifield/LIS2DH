@@ -1,5 +1,5 @@
 /** Based on ST MicroElectronics LIS2DH datasheet http://www.st.com/web/en/resource/technical/document/datasheet/DM00042751.pdf
-* 18/06/2014 by Conor Forde <me@conorforde.com>
+* 30/09/2014 by Conor Forde <me@conorforde.com>
 * Updates should be available at https://github.com/Snowda/LIS2DH
 *
 * Changelog:
@@ -98,18 +98,36 @@ uint8_t LIS2DH::readMaskedRegister(const uint8_t register_addr, const uint8_t ma
     //every reference to this is wrong!!! fix them
 }
 
+/** Read the X axis registers
+ * @see LIS2DH_OUT_X_H
+ * @see LIS2DH_OUT_X_L
+ */
 int16_t LIS2DH::getAxisX(void) {
 	return readRegisters(LIS2DH_OUT_X_H, LIS2DH_OUT_X_L);
 }
 
+
+/** Read the Y axis registers
+ * @see LIS2DH_OUT_Y_H
+ * @see LIS2DH_OUT_Y_L
+ */
 int16_t LIS2DH::getAxisY(void) {
 	return readRegisters(LIS2DH_OUT_Y_H, LIS2DH_OUT_Y_L);
 }
 
+/** Read the Z axis registers
+ * @see LIS2DH_OUT_Z_H
+ * @see LIS2DH_OUT_Z_L
+ */
 int16_t LIS2DH::getAxisZ(void) {
 	return readRegisters(LIS2DH_OUT_Z_H, LIS2DH_OUT_Z_L);
 }
 
+/** Read the all axis registers
+ * @see getAxisZ()
+ * @see getAxisY()
+ * @see getAxisZ()
+ */
 void LIS2DH::getMotion(int16_t* ax, int16_t* ay, int16_t* az) {
     *ax = getAxisX();
     *ay = getAxisY();
