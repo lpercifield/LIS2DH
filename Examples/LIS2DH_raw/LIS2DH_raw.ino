@@ -38,7 +38,7 @@ void setup() {
 
     Serial.print("x:\t");
     Serial.print("y:\t");
-    Serial.print("z:\t");
+    Serial.println("z:\t");
 }
 
 void loop() {

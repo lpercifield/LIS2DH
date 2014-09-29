@@ -245,7 +245,7 @@ class LIS2DH {
         bool writeRegister(const uint8_t register_addr, const uint8_t value);
         bool writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value);
         bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const bool value);
-		bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value);
+		bool writeMaskedRegister(const int register_addr, const int mask, const int value);
 		uint8_t readRegister(const uint8_t register_addr);
 		uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
 		uint8_t readMaskedRegister(const uint8_t register_addr, const uint8_t mask);

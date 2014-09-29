@@ -15,7 +15,7 @@
 #include "Wire.h"
 
 LIS2DH::LIS2DH() {
-    _address = LIS2DH_DEFAULT_ADDRESS;
+    _address = LIS2DH_I_AM_MASK;//LIS2DH_DEFAULT_ADDRESS;
 }
 
 bool LIS2DH::init(void) {
@@ -60,7 +60,7 @@ bool LIS2DH::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask
     }
 }
 
-bool LIS2DH::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
+bool LIS2DH::writeMaskedRegister(const int register_addr, const int mask, const int value) {
     uint8_t masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
     return writeRegister(register_addr, masked_value);
     //every reference to this is wrong (also)!! fix them!
