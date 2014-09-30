@@ -7,6 +7,7 @@ Arduino device driver for communicating with LIS2DH accelerometer over I2C
 
 ======================
 Installation
+======================
 
 Requires the Arduino Libraries
 ![Wire.h](http://arduino.cc/en/reference/wire) 
@@ -24,6 +25,7 @@ Make sure that if you are installing updates that you remove any pre-existing li
 
 ======================
 Wiring Diagram
+======================
 
 ![LIS2DH wiring diagram](docs/LIS2DH.png)
 
