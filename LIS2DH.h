@@ -74,6 +74,7 @@
 #define LIS2DH_Z_EN_MASK 		0x04
 #define LIS2DH_Y_EN_MASK 		0x02
 #define LIS2DH_X_EN_MASK		0x01
+#define LIS2DH_XYZ_EN_MASK		0x07
 
 // CTRL_REG2 masks
 #define LIS2DH_HPM_MASK 		0xC0

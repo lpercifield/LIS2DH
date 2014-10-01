@@ -22,10 +22,8 @@ bool LIS2DH::init(void) {
     Wire.begin(); 
     
     //Put into the correct operating mode 
-    enableAxisX();
-    enableAxisY();
-    enableAxisZ();
     disableLowPower();
+    enableAxisXYZ();
     setDataRate(2);
 }
 
@@ -53,49 +51,31 @@ bool LIS2DH::writeRegisters(const uint8_t msb_register, const uint8_t msb_value,
 }
 
 bool LIS2DH::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const bool value) {
+    uint8_t data = readRegister(register_addr);
+    uint8_t combo;
     if(value) {
-        return writeRegister(register_addr, mask);
+        combo = (mask | data);
     } else {
-        return writeRegister(register_addr, 0);
+        combo = ((~mask) & data);
     }
+    return writeRegister(register_addr, combo);
 }
 
 bool LIS2DH::writeMaskedRegister(const int register_addr, const int mask, const int value) {
-    uint8_t masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
+    uint8_t data = readRegister(register_addr);
+    uint8_t masked_value = (data | (mask & value)); //Not sure if right...
     return writeRegister(register_addr, masked_value);
-    //every reference to this is wrong (also)!! fix them!
-}
-
-uint8_t LIS2DH::readRegister(const uint8_t register_addr) {
-    //call sensor by address
-    //call registers
-    uint8_t data = 0;
-
-    Wire.beginTransmission(_address); 
-    Wire.write(register_addr); 
-    Wire.endTransmission(); 
-
-    Wire.requestFrom((int)_address, 1);
-
-    while(Wire.available()) {
-        data = Wire.read();    // receive a byte as character
-    }
-
-    return data; //return the data returned from the register
 }
 
 uint16_t LIS2DH::readRegisters(const uint8_t msb_register, const uint8_t lsb_register) {
     uint8_t msb = readRegister(msb_register);
     uint8_t lsb = readRegister(lsb_register);
     return (((int16_t)msb) << 8) | lsb;
-
 }
 
 uint8_t LIS2DH::readMaskedRegister(const uint8_t register_addr, const uint8_t mask) {
     uint8_t data = readRegister(register_addr);
     return (data & mask);
-
-    //every reference to this is wrong!!! fix them
 }
 
 /** Read the X axis registers
@@ -226,6 +206,14 @@ bool LIS2DH::disableAxisZ(void) {
 
 bool LIS2DH::isZAxisEnabled(void) {
     return (readMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_Z_EN_MASK) != 0);
+}
+
+bool LIS2DH::enableAxisXYZ(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_XYZ_EN_MASK, true);
+}
+
+bool LIS2DH::disableAxisXYZ(void) {
+    return writeMaskedRegister(LIS2DH_CTRL_REG1, LIS2DH_XYZ_EN_MASK, false);
 }
 
 bool LIS2DH::getHPFilterMode(uint8_t mode) {
