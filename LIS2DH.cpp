@@ -19,8 +19,7 @@ LIS2DH::LIS2DH() {
 }
 
 bool LIS2DH::init(void) {
-    Wire.begin();
-    //Wire.beginOnPins(23,24);
+    Wire.beginOnPins(23,24);
 
     //Put into the correct operating mode
     disableLowPower();
