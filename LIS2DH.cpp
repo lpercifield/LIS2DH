@@ -5,7 +5,7 @@
 * Changelog:
 *     ... - ongoing development release
 
-* NOTE: THIS IS ONLY A PARIAL RELEASE. 
+* NOTE: THIS IS ONLY A PARIAL RELEASE.
 * THIS DEVICE CLASS IS CURRENTLY UNDERGOING ACTIVE DEVELOPMENT AND IS MISSING MOST FEATURES.
 * PLEASE KEEP THIS IN MIND IF YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
 */
@@ -19,7 +19,8 @@ LIS2DH::LIS2DH() {
 }
 
 bool LIS2DH::init(void) {
-    Wire.beginOnPins(23,24);
+    Wire.begin();
+    //Wire.beginOnPins(23,24);
 
     //Put into the correct operating mode
     disableLowPower();
