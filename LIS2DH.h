@@ -5,7 +5,7 @@
 * Changelog:
 *     ... - ongoing development release
 
-* NOTE: THIS IS ONLY A PARIAL RELEASE.
+* NOTE: THIS IS ONLY A PARIAL RELEASE. 
 * THIS DEVICE CLASS IS CURRENTLY UNDERGOING ACTIVE DEVELOPMENT AND IS MISSING MOST FEATURES.
 * PLEASE KEEP THIS IN MIND IF YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
 */
@@ -250,7 +250,6 @@ class LIS2DH {
         bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const bool value);
 		bool writeMaskedRegister(const int register_addr, const int mask, const int value);
 		uint8_t readRegister(const uint8_t register_addr);
-        //uint8_t readRegister(const unsigned char register_addr);
 		uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
 		uint8_t readMaskedRegister(const uint8_t register_addr, const uint8_t mask);
 

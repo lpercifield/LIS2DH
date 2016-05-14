@@ -10,9 +10,9 @@ Installation
 ======================
 
 Requires the Arduino Libraries
-![Wire.h](http://arduino.cc/en/reference/wire) 
-for I2C and 
-![SPI.h](http://arduino.cc/en/Reference/SPI) 
+![Wire.h](http://arduino.cc/en/reference/wire)
+for I2C and
+![SPI.h](http://arduino.cc/en/Reference/SPI)
 depending on how you wish to interface with the chip.
 
 *warning* SPI not supported yet!
